@@ -1,0 +1,151 @@
+{
+  "version": "2.0",
+  "name": "claude-shell-mcp-enhanced",
+  "description": "Call Claude Code CLI locally through MCP with retry, timeout, and model selection support.",
+  "executable": {
+    "command": "./mcp-claude.sh"
+  },
+  "tools": {
+    "claude.generate": {
+      "description": "Generate code or text via Claude Code CLI with retry and model selection",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "Prompt to pass to Claude CLI"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model to use: haiku (fast, cheap), sonnet (balanced), opus (most capable). Default: haiku",
+            "enum": ["haiku", "sonnet", "opus", "Haiku", "Sonnet", "Opus", "Opus 4.5"],
+            "default": "haiku"
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Timeout in seconds. Default: 660 (11 minutes)",
+            "default": 660,
+            "minimum": 30,
+            "maximum": 1800
+          },
+          "maxRetries": {
+            "type": "number",
+            "description": "Maximum retry attempts on failure or timeout. Default: 3",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 10
+          }
+        },
+        "required": ["prompt"]
+      }
+    },
+    "claude.edit": {
+      "description": "Edit files via Claude Code CLI with retry and model selection",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "Edit instructions to pass to Claude CLI"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model to use: haiku (fast), sonnet (balanced), opus (most capable). Default: haiku",
+            "enum": ["haiku", "sonnet", "opus", "Haiku", "Sonnet", "Opus", "Opus 4.5"],
+            "default": "haiku"
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Timeout in seconds. Default: 660",
+            "default": 660
+          },
+          "maxRetries": {
+            "type": "number",
+            "description": "Maximum retry attempts. Default: 3",
+            "default": 3
+          }
+        },
+        "required": ["prompt"]
+      }
+    },
+    "claude.refactor": {
+      "description": "Refactor code via Claude Code CLI with retry and model selection",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "Refactoring instructions to pass to Claude CLI"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model to use: haiku (fast), sonnet (balanced), opus (most capable). Default: haiku",
+            "enum": ["haiku", "sonnet", "opus", "Haiku", "Sonnet", "Opus", "Opus 4.5"],
+            "default": "haiku"
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Timeout in seconds. Default: 660",
+            "default": 660
+          },
+          "maxRetries": {
+            "type": "number",
+            "description": "Maximum retry attempts. Default: 3",
+            "default": 3
+          }
+        },
+        "required": ["prompt"]
+      }
+    },
+    "claude.generate.json": {
+      "description": "Generate JSON response with automatic validation and retry. The AI will be prompted to return JSON, and the response will be validated. If validation fails, it will automatically retry.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "Prompt for JSON generation. Should specify the expected JSON structure."
+          },
+          "model": {
+            "type": "string",
+            "description": "Model to use. Default: haiku",
+            "enum": ["haiku", "sonnet", "opus", "Haiku", "Sonnet", "Opus", "Opus 4.5"],
+            "default": "haiku"
+          },
+          "maxRetries": {
+            "type": "number",
+            "description": "Maximum retry attempts for JSON validation. Default: 3",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 10
+          }
+        },
+        "required": ["prompt"]
+      }
+    },
+    "claude.edit.json": {
+      "description": "Edit with JSON response validation and retry. Useful when you need structured data back from an edit operation.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "Edit instructions expecting JSON response. Should specify the expected JSON structure."
+          },
+          "model": {
+            "type": "string",
+            "description": "Model to use. Default: haiku",
+            "enum": ["haiku", "sonnet", "opus", "Haiku", "Sonnet", "Opus", "Opus 4.5"],
+            "default": "haiku"
+          },
+          "maxRetries": {
+            "type": "number",
+            "description": "Maximum retry attempts for JSON validation. Default: 3",
+            "default": 3
+          }
+        },
+        "required": ["prompt"]
+      }
+    }
+  }
+}
