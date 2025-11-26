@@ -1,23 +1,6 @@
 # mcp-claude-shell
 A lightweight MCP server that exposes local Claude Code CLI commands as structured tools with retry, timeout control, and JSON-validated responses.
 
-Here is a clean, professional, GitHub-ready English README.md rewritten specifically for your MCP server and the mcp.json you provided.
-
-If you want a more fancy “GitHub-premium style” version (icons, shields, badges, banners), I can generate that too.
-
-⸻
-
-📘 README.md (English Version)
-
-# Claude Shell MCP Server
-
-This project provides a lightweight **Shell-based MCP (Model Context Protocol) server**  
-that exposes the local **Claude Code CLI** as structured MCP tools.
-
-With this server, any MCP-compatible client (Cursor, Claude Desktop, VSCode MCP, custom agents, etc.)  
-can call the local `claude` command as if it were a remote AI API — but with the speed, privacy, and flexibility of local execution.
-
----
 
 ## ✨ Features
 
