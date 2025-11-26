@@ -1,13 +1,13 @@
 {
   "version": "2.0",
   "name": "claude-shell-mcp-enhanced",
-  "description": "Call Claude Code CLI locally through MCP with retry, timeout, and model selection support.",
+  "description": "Call Claude Code CLI locally through MCP with full CLI flags support (v2.0).",
   "executable": {
     "command": "./mcp-claude.sh"
   },
   "tools": {
-    "claude.generate": {
-      "description": "Generate code or text via Claude Code CLI with retry and model selection",
+    "claude_generate": {
+      "description": "Generate code or text via Claude Code CLI with retry, model selection, and full CLI flags support",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -34,13 +34,52 @@
             "default": 3,
             "minimum": 1,
             "maximum": 10
+          },
+          "maxTurns": {
+            "type": "number",
+            "description": "Maximum agent turns (iterations). Limits how many times the agent can loop. Default: unlimited",
+            "minimum": 1
+          },
+          "outputFormat": {
+            "type": "string",
+            "description": "Output format: text, json, stream-json. Default: json",
+            "enum": ["text", "json", "stream-json"],
+            "default": "json"
+          },
+          "systemPrompt": {
+            "type": "string",
+            "description": "Replace default system prompt entirely"
+          },
+          "appendSystemPrompt": {
+            "type": "string",
+            "description": "Append to default system prompt"
+          },
+          "allowedTools": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Additional tools to allow without asking (e.g., [\"Bash(git:*)\", \"Read\"])"
+          },
+          "disallowedTools": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tools to disallow (e.g., [\"Edit\", \"Write\"])"
+          },
+          "addDirs": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Additional directories to access (e.g., [\"../other-project\", \"/tmp/data\"])"
+          },
+          "verbose": {
+            "type": "boolean",
+            "description": "Enable verbose logging for debugging. Default: false",
+            "default": false
           }
         },
         "required": ["prompt"]
       }
     },
-    "claude.edit": {
-      "description": "Edit files via Claude Code CLI with retry and model selection",
+    "claude_edit": {
+      "description": "Edit files via Claude Code CLI with retry, model selection, and full CLI flags support",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -63,13 +102,51 @@
             "type": "number",
             "description": "Maximum retry attempts. Default: 3",
             "default": 3
+          },
+          "maxTurns": {
+            "type": "number",
+            "description": "Maximum agent turns. Default: unlimited"
+          },
+          "outputFormat": {
+            "type": "string",
+            "description": "Output format. Default: json",
+            "enum": ["text", "json", "stream-json"],
+            "default": "json"
+          },
+          "systemPrompt": {
+            "type": "string",
+            "description": "Replace default system prompt"
+          },
+          "appendSystemPrompt": {
+            "type": "string",
+            "description": "Append to default system prompt"
+          },
+          "allowedTools": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Additional tools to allow"
+          },
+          "disallowedTools": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tools to disallow"
+          },
+          "addDirs": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Additional directories to access"
+          },
+          "verbose": {
+            "type": "boolean",
+            "description": "Enable verbose logging",
+            "default": false
           }
         },
         "required": ["prompt"]
       }
     },
-    "claude.refactor": {
-      "description": "Refactor code via Claude Code CLI with retry and model selection",
+    "claude_refactor": {
+      "description": "Refactor code via Claude Code CLI with retry, model selection, and full CLI flags support",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -92,13 +169,51 @@
             "type": "number",
             "description": "Maximum retry attempts. Default: 3",
             "default": 3
+          },
+          "maxTurns": {
+            "type": "number",
+            "description": "Maximum agent turns. Default: unlimited"
+          },
+          "outputFormat": {
+            "type": "string",
+            "description": "Output format. Default: json",
+            "enum": ["text", "json", "stream-json"],
+            "default": "json"
+          },
+          "systemPrompt": {
+            "type": "string",
+            "description": "Replace default system prompt"
+          },
+          "appendSystemPrompt": {
+            "type": "string",
+            "description": "Append to default system prompt"
+          },
+          "allowedTools": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Additional tools to allow"
+          },
+          "disallowedTools": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Tools to disallow"
+          },
+          "addDirs": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Additional directories to access"
+          },
+          "verbose": {
+            "type": "boolean",
+            "description": "Enable verbose logging",
+            "default": false
           }
         },
         "required": ["prompt"]
       }
     },
-    "claude.generate.json": {
-      "description": "Generate JSON response with automatic validation and retry. The AI will be prompted to return JSON, and the response will be validated. If validation fails, it will automatically retry.",
+    "claude_generate_json": {
+      "description": "Generate JSON response with automatic validation, retry, and optional JSON Schema validation",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -118,13 +233,25 @@
             "default": 3,
             "minimum": 1,
             "maximum": 10
+          },
+          "jsonSchema": {
+            "type": "string",
+            "description": "JSON Schema to validate output against (as JSON string)"
+          },
+          "systemPrompt": {
+            "type": "string",
+            "description": "Replace default system prompt"
+          },
+          "appendSystemPrompt": {
+            "type": "string",
+            "description": "Append to default system prompt"
           }
         },
         "required": ["prompt"]
       }
     },
-    "claude.edit.json": {
-      "description": "Edit with JSON response validation and retry. Useful when you need structured data back from an edit operation.",
+    "claude_edit_json": {
+      "description": "Edit with JSON response validation, retry, and optional JSON Schema validation",
       "input_schema": {
         "type": "object",
         "properties": {
@@ -142,6 +269,18 @@
             "type": "number",
             "description": "Maximum retry attempts for JSON validation. Default: 3",
             "default": 3
+          },
+          "jsonSchema": {
+            "type": "string",
+            "description": "JSON Schema to validate output against (as JSON string)"
+          },
+          "systemPrompt": {
+            "type": "string",
+            "description": "Replace default system prompt"
+          },
+          "appendSystemPrompt": {
+            "type": "string",
+            "description": "Append to default system prompt"
           }
         },
         "required": ["prompt"]
