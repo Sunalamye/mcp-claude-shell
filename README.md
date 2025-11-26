@@ -162,19 +162,6 @@ This allows MCP clients to introspect your server and use it without configurati
 
 ⸻
 
-🛠 Extending the Server
-
-Possible extensions include:
-	•	Streaming output
-	•	Unified CLI router (Claude + OpenAI + Gemini + Groq)
-	•	Enhanced error reporting
-	•	Custom logging
-	•	Shared server configuration file
-	•	Additional specialized tools
-
-If you need these, feel free to request fully generated implementations.
-
-⸻
 
 📜 License
 
